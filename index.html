@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churneya.ru</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        #countdown {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="frog.jpg" alt="Лягушка">
+    <div id="countdown"></div>
+</div>
+
+<script>
+    function getNextWednesday() {
+        const now = new Date();
+        const dayOfWeek = now.getDay();
+        const daysUntilWednesday = (3 - dayOfWeek + 7) % 7;
+        const nextWednesday = new Date(now);
+        nextWednesday.setDate(now.getDate() + daysUntilWednesday);
+        nextWednesday.setHours(0, 0, 0, 0);
+        return nextWednesday;
+    }
+
+    function updateCountdown() {
+        const now = new Date();
+        const nextWednesday = getNextWednesday();
+        const diff = nextWednesday - now;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('countdown').innerHTML = `
+        До среды: ${days} дней ${hours} часов ${minutes} минут ${seconds} секунд
+      `;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+</body>
+</html>
